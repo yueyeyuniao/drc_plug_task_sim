@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <!-- A gazebo links attacher -->
+    <plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <!-- A wall -->
+    <include>
+      <uri>model://wall</uri>
+    </include>
+    <!-- A cable -->
+    <include>
+      <uri>model://cable</uri>
+    </include>
+    <!-- A kinect -->
+    <include>
+      <uri>model://kinect_ros_with_stand</uri>
+    </include>
+  </world>
+</sdf>
