@@ -58,9 +58,47 @@
 
   <!-- Launch kinect2 and set the TF -->
   <!-- <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />  -->
+	
+	<!-- use reference frame to match with the real world robot -->
+ 	<node pkg="tf" type="static_transform_publisher" 
+        	name="root_link_to_reference" 
+        	args="0 0 0 -1.57 0 0 /root /reference 1" />
 	<node pkg="tf" type="static_transform_publisher" 
         	name="map_link_to_camera" 
-        	args="-0.6 -1.0 0.486 0 0 -1.57 /j2n6s300_link_base /camera_link 1" />
+        	args="1.0 -0.5 0.486 1.57 0 -1.57 /reference /camera_link 1" />
+	
+	<!-- tf publisher for the task-->
+ 	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_endeffector_default" 
+        	args="0.0 0.0 0.0 -1.57 0.0 3.14 /reference /endeffector_default 100" />	
+
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_socket1" 
+        	args="0.45 -0.63 0.41 -1.57 0.0 3.14 /reference /socket1 100" />
+
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_socket2" 
+        	args="0.135 -0.63 0.41 -1.57 0.0 3.14 /reference /socket2 100" />
+
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_target" 
+        	args="0.135 -0.63 0.41 -1.57 0.0 3.14 /reference /Target_Socket 100" />
+
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_socket_1" 
+        	args="0.45 -0.63 0.41 -1.57 0.0 3.14 /reference /socket_1 100" />
+
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_socket_2" 
+        	args="0.135 -0.63 0.41 -1.57 0.0 3.14 /reference /socket_2 100" />
+	
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_preinsert" 
+        	args="0.45 -0.54 0.41 -1.57 0.0 3.14 /reference /preinsert 100" />	
+
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="eedefault_link_to_ee" 
+        	args="0.0 0.0 0.0 -1.57 0.0 0.0 /j2n6s300_end_effector /end_effector 100" />
 
 </launch>
 
