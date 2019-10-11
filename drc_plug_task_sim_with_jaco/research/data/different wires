@@ -1,0 +1,9 @@
+wires       error (roll pitch yaw)   number of adjustments
+
+power cable     0   0.03   -0.01             5 
+
+hdmi cable      0   -0.02   0.03             7
+
+mac charger cable   stereo camera does not have a point cloud feedback, the wire tip does not meet the requirement 
+
+

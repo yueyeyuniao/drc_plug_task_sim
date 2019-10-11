@@ -1,0 +1,8 @@
+<launch>
+
+	<include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="base_link_to_camera" 
+        	args="-0.45 -0.058 0.05 0.0 0.0 1.57 /j2n6s300_link_base /camera_link 100" />
+
+</launch>

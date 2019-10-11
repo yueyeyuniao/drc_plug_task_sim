@@ -1,0 +1,12 @@
+<launch>
+		
+
+	<include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+	<node pkg="tf" type="static_transform_publisher" 
+        	name="map_link_to_camera" 
+        	args="0.2286 -0.02 0.33 0.0 3.14 1.57 /root /kinect2_rgb_optical_frame 100" />
+
+
+
+
+</launch>

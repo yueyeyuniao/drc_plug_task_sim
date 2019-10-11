@@ -1,0 +1,176 @@
+Peng Chang [7:29 PM]
+pengchang@pengchang-personal-laptop:~$ rostopic hz /filtered_point_cloud
+subscribed to [/filtered_point_cloud]
+average rate: 29.997
+    min: 0.032s max: 0.035s std dev: 0.00079s window: 28
+average rate: 30.000
+    min: 0.032s max: 0.035s std dev: 0.00074s window: 58
+average rate: 29.996
+    min: 0.031s max: 0.035s std dev: 0.00078s window: 88
+average rate: 29.984
+    min: 0.031s max: 0.035s std dev: 0.00076s window: 118
+average rate: 29.985
+    min: 0.031s max: 0.035s std dev: 0.00079s window: 148
+^Caverage rate: 29.987
+    min: 0.031s max: 0.035s std dev: 0.00080s window: 154
+pengchang@pengchang-personal-laptop:~$ rostopic hz /visualization_marker
+subscribed to [/visualization_marker]
+average rate: 92.316
+    min: 0.000s max: 0.035s std dev: 0.01554s window: 84
+average rate: 91.014
+    min: 0.000s max: 0.035s std dev: 0.01561s window: 174
+average rate: 90.684
+    min: 0.000s max: 0.035s std dev: 0.01562s window: 264
+average rate: 90.493
+    min: 0.000s max: 0.035s std dev: 0.01563s window: 354
+average rate: 90.345
+    min: 0.000s max: 0.035s std dev: 0.01564s window: 444
+^Caverage rate: 90.341
+    min: 0.000s max: 0.035s std dev: 0.01564s window: 453
+
+Peng Chang [7:48 PM]
+pengchang@pengchang-personal-laptop:~$ rostopic hz /j2n6s300_driver/in/cartesian_velocity
+subscribed to [/j2n6s300_driver/in/cartesian_velocity]
+no new messages
+no new messages
+no new messages
+no new messages
+no new messages
+average rate: 11837.865
+    min: 0.000s max: 0.022s std dev: 0.00080s window: 8691
+average rate: 11901.732
+    min: 0.000s max: 0.024s std dev: 0.00081s window: 20578
+average rate: 11951.585
+    min: 0.000s max: 0.024s std dev: 0.00078s window: 32773
+average rate: 11963.379
+    min: 0.000s max: 0.024s std dev: 0.00078s window: 42440
+
+Peng Chang [8:06 PM]
+limit the cartesian speed
+the velocity pub frequency is high in order to get a smooth trajectory
+
+Peng Chang [8:40 PM]
+[ INFO] [1566952023.932726428]: Attention: moving the arm with the object
+Pose error before convertion2.3342e-312 0 0 3.53656e-17 0.195129 -0.220266
+pre to ee-0.104125, -0.633212, 0.175425
+tip to ee0.0419221, -0.436062, -0.0681377
+control xyzrollpitchyaw: -1.39562,-0.431729,0.27601,0.91924,-0.393358,0.830444
+pre to ee-0.104125, -0.633212, 0.175425
+tip to ee0.0419221, -0.436062, -0.0681377
+Pose error before convertion-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+Pose error data:-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+control xyzrollpitchyaw: -0.697811,-0.215864,0.138005,0.45962,-0.196679,0.415222
+pre to ee-0.104125, -0.633212, 0.175425
+tip to ee0.0419221, -0.436062, -0.0681377
+Pose error before convertion-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+Pose error data:-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+control xyzrollpitchyaw: -0.697811,-0.215864,0.138005,0.45962,-0.196679,0.415222
+pre to ee-0.104125, -0.633212, 0.175425
+tip to ee0.0419221, -0.436062, -0.0681377
+Pose error before convertion-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+Pose error data:-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+control xyzrollpitchyaw: -0.697811,-0.215864,0.138005,0.45962,-0.196679,0.415222
+pre to ee-0.104125, -0.633212, 0.175425
+tip to ee0.0419221, -0.436062, -0.0681377
+Pose error before convertion-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+Pose error data:-0.107932 -0.348906 0.0690024 3.53656e-17 0.195129 -0.220266
+control xyzrollpitchyaw: -0.697811,-0.215864,0.138005,0.45962,-0.196679,0.415222
+jaco : For Cartesian linear velocity, the unit is meter/second. Definition of angular velocity "Omega" is based on the skew-symmetric matrices "S = R*R^(-1)", where "R" is the rotation matrix. angular velocity vector "Omega = [S(3,2); S(1,3); S(2,1)]". The unit is radian/second. An example is given below
+
+Peng Chang [8:50 PM]
+linear velocity limit 1.5 m/s  1/30 * 1.5 = 0.05 m
+angular velocity limit 0.6 rad/s 1/30 * 0.6 = 0.02 rad (edited) 
+
+Peng Chang [2:02 PM]
+look at jihong’s paper
+some nuggets
+
+Peng Chang [7:51 PM]
+// fourier model
+     std::cout << "Fourier shape parameters......" << std::endl;
+     int L = points.points.size();
+     MatrixXd c(1,L*3);
+     for(int i=0; i<L-1; i++){
+       c(1,3*i) = points.points[i].x;
+       c(1,3*i+1) = points.points[i].y;
+       c(1,3*i+2) = points.points[i].z;
+     }
+
+     //std::cout << c << std::endl;
+     // pick N = 3
+     int N = 3;
+     int P = 6*N+3;
+     double rho = 0.0;
+     MatrixXd G(3*L,P);
+     for (int i=1; i<=L; i++)
+     {
+       rho = (i-1)*pi/L;
+
+
+
+       for (int j=1; j<=3; j++)
+       {
+         j_rho = j * rho
+       }
+     }
+
+     MatrixXd G_rho_1(3,P);
+
+Peng Chang [6:40 PM]
+if use pseudo in paper (edited) 
+
+Peng Chang [6:53 PM]
+Fourier shape parameters (N = 3):
+0.321142
+-0.339185
+0.524154
+0.358280
+-0.715235
+0.362949
+1.558186
+0.682281
+-0.780364
+-1.717233
+-0.225176
+0.893679
+-0.180051
+-0.030660
+0.480114
+-0.076735
+1.133818
+0.106343
+-0.561605
+0.869198
+0.033737
+POLYFIT PARAMETERS: a0 a1 a2 b0 b1 b20.095631, -0.971947, -0.711208, -1.191718, -4.768564, -3.550488
+Number of Sample Points after Filtering: 11
+........................................................
+if use pseudo in eigen
+Fourier shape parameters (N = 3):
+0.169470
+-0.285769
+-1.206446
+0.562848
+0.169128
+0.070412
+-0.023614
+-0.491429
+0.872075
+-0.587578
+-0.152786
+0.870146
+0.270912
+0.052544
+0.449528
+-0.235039
+0.366754
+0.355835
+0.148046
+-1.439919
+0.098280
+
+POLYFIT PARAMETERS: a0 a1 a2 b0 b1 b20.095410, -0.975849, -0.716978, -1.186088, -4.741231, -3.519755
+Number of Sample Points after Filtering: 11
+N = 3
+P = 3*6+3 = 21
+L = 11
