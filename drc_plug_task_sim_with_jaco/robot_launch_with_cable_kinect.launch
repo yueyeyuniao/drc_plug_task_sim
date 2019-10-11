@@ -16,7 +16,7 @@
   <arg name="z" default="0"/>
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
-  <arg name="yaw" default="1.57"/>
+  <arg name="yaw" default="0"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -60,33 +60,30 @@
   <!-- <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />  -->
 	
 	<!-- use reference frame to match with the real world robot -->
- 	<node pkg="tf" type="static_transform_publisher" 
-        	name="root_link_to_reference" 
-        	args="0 0 0 -1.57 0 0 /root /reference 1" />
 	<node pkg="tf" type="static_transform_publisher" 
         	name="map_link_to_camera" 
-        	args="1.0 -0.5 0.486 1.57 0 -1.57 /reference /camera_link 1" />
-	
+        	args="1.0 -0.5 0.486 1.57 0 -1.57 /root /camera_link 1" />
+
 	<!-- tf publisher for the task-->
  	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_endeffector_default" 
-        	args="0.0 0.0 0.0 0.0 0.0 3.14 /reference /endeffector_default 100" />	
+        	args="0.0 0.0 0.0 0.0 0.0 3.14 /root /endeffector_default 100" />
 
 	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_socket1" 
-        	args="0.3 -0.7 0.6 0.0 0.0 3.14 /reference /socket1 100" />
+        	args="0.3 -0.7 0.6 0.0 0.0 3.14 /root /socket1 100" />
 
 	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_socket2" 
-        	args="0.0 -0.7 0.6 0.0 0.0 3.14 /reference /socket2 100" />
+        	args="0.0 -0.7 0.6 0.0 0.0 3.14 /root /socket2 100" />
 
 	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_target" 
-        	args="0.0 -0.7 0.6 0.0 0.0 3.14 /reference /Target_Socket 100" />
+        	args="0.0 -0.7 0.6 0.0 0.0 3.14 /root /Target_Socket 100" />
 	
 	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_preinsert" 
-        	args="0.0 -0.6 0.6 0.0 0.0 3.14 /reference /preinsert 100" />	
+        	args="0.0 -0.6 0.6 0.0 0.0 3.14 /root /preinsert 100" />	
 
 	<node pkg="tf" type="static_transform_publisher" 
         	name="eedefault_link_to_ee" 
