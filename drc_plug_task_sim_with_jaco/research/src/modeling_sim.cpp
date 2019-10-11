@@ -69,7 +69,7 @@ class PointCloudProc
         filtered_point_cloud_pub_ = nh_.advertise<pcl::PointCloud<pcl::PointXYZ>>("filtered_point_cloud", 1000);
         marker_pub = nh_.advertise<visualization_msgs::Marker>("visualization_marker", 10);
         display_publisher = nh_.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
-        fixed_frame_ = "/reference";
+        fixed_frame_ = "/root";
     }
 
     void pointcloudcb(const pcl::PointCloud<pcl::PointXYZ>::Ptr &msg)
@@ -96,8 +96,8 @@ class PointCloudProc
         // get the position of the end-effector/finger_tip
         // listener_.waitForTransform("/root", "j2n6s300_end_effector",ros::Time(0), ros::Duration(3.0));
         // listener_.lookupTransform("/root", "j2n6s300_end_effector",ros::Time(0), transform);
-        listener_.waitForTransform("reference", "j2n6s300_link_finger_tip_2",ros::Time(0), ros::Duration(3.0));
-        listener_.lookupTransform("/reference", "j2n6s300_link_finger_tip_2",ros::Time(0), transform);
+        listener_.waitForTransform("root", "j2n6s300_link_finger_tip_2",ros::Time(0), ros::Duration(3.0));
+        listener_.lookupTransform("/root", "j2n6s300_link_finger_tip_2",ros::Time(0), transform);
 
         std::cout << "Position of endeffector: " << transform.getOrigin().x() << ", " << transform.getOrigin().y() << ", " << transform.getOrigin().z() << std::endl;
 
@@ -331,7 +331,7 @@ class PointCloudProc
       std::cout << "Number of Sample Points after Filtering: " << sparse_x.size() << std::endl;
 
       // display the sparse points in rviz
-      points.header.frame_id = line_strip.header.frame_id = line_list.header.frame_id = "/reference";
+      points.header.frame_id = line_strip.header.frame_id = line_list.header.frame_id = "/root";
       points.header.stamp = line_strip.header.stamp = line_list.header.stamp = ros::Time::now();
       points.ns = line_strip.ns = line_list.ns = "points_and_lines";
       points.action = line_strip.action = line_list.action = visualization_msgs::Marker::ADD;
@@ -436,7 +436,7 @@ class PointCloudProc
 
       // for the tip
       geometry_msgs::PointStamped points_root_0, points_root_1, points_ee_0, points_ee_1;
-      points_root_0.header.frame_id = points_root_1.header.frame_id = "/reference";
+      points_root_0.header.frame_id = points_root_1.header.frame_id = "/root";
       points_root_0.header.stamp = points_root_1.header.stamp = ros::Time();
       points_root_0.point.x = points.points[0].x;
       points_root_1.point.x = points.points[1].x;
@@ -488,7 +488,7 @@ class PointCloudProc
       int selected1 = 5;  // selected1 = grasp_point_index_1;
 
       geometry_msgs::PointStamped points_root_w0, points_root_w1, points_ee_w0, points_ee_w1;
-      points_root_w0.header.frame_id = points_root_w1.header.frame_id = "/reference";
+      points_root_w0.header.frame_id = points_root_w1.header.frame_id = "/root";
       points_root_w0.header.stamp = points_root_w1.header.stamp = ros::Time();
       points_root_w0.point.x = points.points[selected0].x;
       points_root_w1.point.x = points.points[selected1].x;
