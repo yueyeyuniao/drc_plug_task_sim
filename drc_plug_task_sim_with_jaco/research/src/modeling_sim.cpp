@@ -111,11 +111,11 @@ class PointCloudProc
         pass.filter(*cloud_filtered_);
         pass.setInputCloud(cloud_filtered_);
         pass.setFilterFieldName("y");
-        pass.setFilterLimits(center_object.y - 0.6, center_object.y + transform.getOrigin().y()-0.085); // 0.0 needs to change according to the ee's position
+        pass.setFilterLimits(center_object.y - 0.58, center_object.y + transform.getOrigin().y()-0.1); // 0.0 needs to change according to the ee's position
         pass.filter(*cloud_filtered_);
         pass.setInputCloud(cloud_filtered_);
         pass.setFilterFieldName("z");
-        pass.setFilterLimits(center_object.z + 0, center_object.z + 0.9);  //0.35 is for testing disturbance
+        pass.setFilterLimits(center_object.z + 0.3, center_object.z + 0.9);  //0.35 is for testing disturbance
         pass.filter(*cloud_filtered_);
 
         ROS_INFO("Point cloud is filtered!");
@@ -315,7 +315,7 @@ class PointCloudProc
         num_sample = floor(N/1400);
       }
       else{
-        num_sample = floor(N/800);
+        num_sample = floor(N/300);
       }
 
       //int num_sample = floor(N/700);   // 1000 -> power cable  700 -> hdmi
@@ -484,8 +484,8 @@ class PointCloudProc
       }
 
 
-      int selected0 = 4;  // selected0 = grasp_point_index_0;
-      int selected1 = 5;  // selected1 = grasp_point_index_1;
+      int selected0 = 8;  // selected0 = grasp_point_index_0;
+      int selected1 = 9;  // selected1 = grasp_point_index_1;
 
       geometry_msgs::PointStamped points_root_w0, points_root_w1, points_ee_w0, points_ee_w1;
       points_root_w0.header.frame_id = points_root_w1.header.frame_id = "/root";
@@ -512,18 +512,18 @@ class PointCloudProc
       // br_tip.sendTransform(tf::StampedTransform(transform_tip, ros::Time::now(), "/endeffector_default", "wire_tip"));
 
       // roll = 0; // publish the tip frame
-      roll_tip = atan(-(points_ee_0.point.y-points_ee_1.point.y)/(points_ee_0.point.z-points_ee_1.point.z));
-      pitch_tip = atan(-(points_ee_0.point.x-points_ee_1.point.x)/sqrt(pow((points_ee_0.point.y-points_ee_1.point.y),2)+pow((points_ee_0.point.z-points_ee_1.point.z),2)));
-      yaw_tip = 0.0;
+      roll_tip = atan((points_ee_0.point.z-points_ee_1.point.z)/(points_ee_0.point.y-points_ee_1.point.y));
+      pitch_tip = 0.0;
+      yaw_tip = -atan((points_ee_0.point.x-points_ee_1.point.x)/sqrt(pow((points_ee_0.point.y-points_ee_1.point.y),2)+pow((points_ee_0.point.z-points_ee_1.point.z),2)));;
       tf::Transform transform_tip;
       transform_tip.setOrigin(tf::Vector3(points_ee_0.point.x, points_ee_0.point.y, points_ee_0.point.z));
       transform_tip.setRotation(tf::createQuaternionFromRPY(roll_tip, pitch_tip, yaw_tip));
       br_tip.sendTransform(tf::StampedTransform(transform_tip, ros::Time::now(), "/endeffector_default", "cable_tip"));
 
       // roll = 0; // publish the wire frame
-      roll_wire = atan(-(points_ee_w0.point.y-points_ee_w1.point.y)/(points_ee_w0.point.z-points_ee_w1.point.z));
-      pitch_wire = atan(-(points_ee_w0.point.x-points_ee_w1.point.x)/sqrt(pow((points_ee_w0.point.y-points_ee_w1.point.y),2)+pow((points_ee_w0.point.z-points_ee_w1.point.z),2)));
-      yaw_wire = 0.0;
+      roll_wire = atan((points_ee_w0.point.z-points_ee_w1.point.z)/(points_ee_w0.point.y-points_ee_w1.point.y));
+      pitch_wire = 0.0;
+      yaw_wire = -atan((points_ee_w0.point.x-points_ee_w1.point.x)/sqrt(pow((points_ee_w0.point.y-points_ee_w1.point.y),2)+pow((points_ee_w0.point.z-points_ee_w1.point.z),2)));
       tf::Transform transform_wire;
       transform_wire.setOrigin(tf::Vector3(points_ee_w0.point.x, points_ee_w1.point.y, points_ee_w0.point.z));
       transform_wire.setRotation(tf::createQuaternionFromRPY(roll_wire, pitch_wire, yaw_wire));
@@ -878,7 +878,7 @@ int main(int argc, char **argv)
     center_object.z = 0;
     PointCloudProc pc_tools;
     ROS_INFO("Initialized");
-    ros::Rate r(30);
+    ros::Rate r(60);
     ros::spin();
     return 0;
 }

@@ -266,6 +266,10 @@ target_link_libraries(modeling_sim ${catkin_LIBRARIES} opencv_core opencv_highgu
 add_executable(kinova_cart_vel src/kinova_cart_vel.cpp)
 target_link_libraries(kinova_cart_vel ${catkin_LIBRARIES} opencv_core opencv_highgui opencv_imgproc)
 add_dependencies(kinova_cart_vel ${catkin_EXPORTED_TARGETS})
+
+add_executable(task_sim src/task_sim.cpp)
+target_link_libraries(task_sim ${catkin_LIBRARIES} opencv_core opencv_highgui opencv_imgproc)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

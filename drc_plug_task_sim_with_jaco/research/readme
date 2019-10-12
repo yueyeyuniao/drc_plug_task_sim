@@ -1,0 +1,15 @@
+steps to run the simulation
+1.launch robot and the world in gazebo
+roslaunch kinova_gazebo robot_launch_with_cable_kinect.launch kinova_robot_type:=j2n6s300
+
+2.launch moveit / use moveit to move the robot to the home position
+roslaunch j2n6s300_moveit_config j2n6s300_gazebo_demo.launch
+
+3.run velocity controller node
+rosrun research kinova_cart_vel
+
+4.run modeling
+rosrun research modeling_sim
+
+5.run task
+rosrun research task_sim
