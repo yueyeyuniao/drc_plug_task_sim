@@ -81,8 +81,8 @@
       <axis>
         <xyz>0.000000 1.000000 0.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.300000</lower>
+          <upper>0.300000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -130,8 +130,8 @@
       <axis>
         <xyz>0.000000 0.000000 1.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.050000</lower>
+          <upper>0.050000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -181,8 +181,8 @@
       <axis>
         <xyz>0.000000 1.000000 0.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.300000</lower>
+          <upper>0.300000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -230,8 +230,8 @@
       <axis>
         <xyz>0.000000 0.000000 1.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.050000</lower>
+          <upper>0.050000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -281,8 +281,8 @@
       <axis>
         <xyz>0.000000 1.000000 0.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.300000</lower>
+          <upper>0.300000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -330,8 +330,8 @@
       <axis>
         <xyz>0.000000 0.000000 1.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.050000</lower>
+          <upper>0.050000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -381,8 +381,8 @@
       <axis>
         <xyz>0.000000 1.000000 0.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.300000</lower>
+          <upper>0.300000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -430,8 +430,8 @@
       <axis>
         <xyz>0.000000 0.000000 1.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.050000</lower>
+          <upper>0.050000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -481,8 +481,8 @@
       <axis>
         <xyz>0.000000 1.000000 0.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.300000</lower>
+          <upper>0.300000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -530,8 +530,8 @@
       <axis>
         <xyz>0.000000 0.000000 1.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.050000</lower>
+          <upper>0.050000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -581,8 +581,8 @@
       <axis>
         <xyz>0.000000 1.000000 0.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.300000</lower>
+          <upper>0.300000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
@@ -630,8 +630,8 @@
       <axis>
         <xyz>0.000000 0.000000 1.000000</xyz>
         <limit>
-          <lower>-0.700000</lower>
-          <upper>0.700000</upper>
+          <lower>-0.050000</lower>
+          <upper>0.050000</upper>
         </limit>
         <dynamics>
           <damping>10.000000</damping>
