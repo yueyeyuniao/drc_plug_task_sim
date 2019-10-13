@@ -107,11 +107,11 @@ class PointCloudProc
         pcl::PassThrough<pcl::PointXYZ> pass;
         pass.setInputCloud(cloud_transformed_);
         pass.setFilterFieldName("x");
-        pass.setFilterLimits(center_object.x + 0.0, center_object.x + 0.60);
+        pass.setFilterLimits(center_object.x - 0.15, center_object.x + 0.60);
         pass.filter(*cloud_filtered_);
         pass.setInputCloud(cloud_filtered_);
         pass.setFilterFieldName("y");
-        pass.setFilterLimits(center_object.y - 0.58, center_object.y + transform.getOrigin().y()-0.1); // 0.0 needs to change according to the ee's position
+        pass.setFilterLimits(center_object.y - 0.7, center_object.y + transform.getOrigin().y()-0.086); // 0.0 needs to change according to the ee's position
         pass.filter(*cloud_filtered_);
         pass.setInputCloud(cloud_filtered_);
         pass.setFilterFieldName("z");
@@ -292,15 +292,8 @@ class PointCloudProc
 
       std::cout << "tip_temp: " << tip_temp << std::endl; 
       if (filter_plug == true){
-        if ((tip_temp +0.6) > 0.002)  
-        {
-          tip_temp = tip_temp + tip_length;  // this 0.08 can be updated !!!!!!! 0.09 -> power cable, 0.046 -> hdmi
-        }
-        else
-        {
-          tip_temp = tip_temp;
-        }
-      }
+        tip_temp = tip_temp + tip_length;  // this 0.08 can be updated !!!!!!! 0.09 -> power cable, 0.046 -> hdmi
+      }  
       else
       {
         tip_temp = tip_temp;
@@ -484,8 +477,8 @@ class PointCloudProc
       }
 
 
-      int selected0 = 8;  // selected0 = grasp_point_index_0;
-      int selected1 = 9;  // selected1 = grasp_point_index_1;
+      int selected0 = 5;  // selected0 = grasp_point_index_0;
+      int selected1 = 6;  // selected1 = grasp_point_index_1;
 
       geometry_msgs::PointStamped points_root_w0, points_root_w1, points_ee_w0, points_ee_w1;
       points_root_w0.header.frame_id = points_root_w1.header.frame_id = "/root";

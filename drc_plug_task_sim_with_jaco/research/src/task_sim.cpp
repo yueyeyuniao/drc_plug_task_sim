@@ -445,7 +445,7 @@ class SurpriseTask
 
       // attach the cable to the gripper
       // detach the cable with the wall
-      attach("j2n6s300", "j2n6s300_link_6", "cable", "link_06");
+      attach("j2n6s300", "j2n6s300_link_6", "cable", "link_04");
       sleep(1);
       detach("wall", "wall", "cable", "plug");
       sleep(1);
@@ -584,6 +584,7 @@ class SurpriseTask
           ROS_ERROR("%s",ex.what());
       }
 
+      std::cout << "get the preinsert to the cable tip" << std::endl;
       tf::Quaternion q_tip(transform_tip.getRotation().x(),transform_tip.getRotation().y(),transform_tip.getRotation().z(),transform_tip.getRotation().w());
       tf::Matrix3x3 m_tip(q_tip);
       m_tip.getEulerYPR(delta_yaw, delta_pitch, delta_roll);
@@ -619,6 +620,9 @@ class SurpriseTask
       catch (tf::TransformException ex) {
           ROS_ERROR("%s",ex.what());
       }
+
+      std::cout << "get the ee to preinsert" << std::endl;
+
       try{
           listener_.waitForTransform("j2n6s300_end_effector", "cable_tip",ros::Time(0), ros::Duration(3.0));
           listener_.lookupTransform("j2n6s300_end_effector", "cable_tip",ros::Time(0), transform_tip_ee); 
@@ -626,7 +630,8 @@ class SurpriseTask
       catch (tf::TransformException ex) {
           ROS_ERROR("%s",ex.what());
       }
-          
+      
+      std::cout << "get the ee to cable tip" << std::endl;
       tf::Quaternion q_pre(transform_pre_ee.getRotation().x(),transform_pre_ee.getRotation().y(),transform_pre_ee.getRotation().z(),transform_pre_ee.getRotation().w());
       tf::Matrix3x3 m_pre(q_pre);
       m_pre.getEulerYPR(yaw_pre_ee, pitch_pre_ee, roll_pre_ee);    
@@ -697,34 +702,34 @@ class SurpriseTask
     float pid_calculation(float setpoint, float pv, std::string ss)
     {
       if (ss == "x"){
-        _Kp = 2;      // 2
-        _Kd = 0.2;    // 0.2
-        _Ki = 0; 
+        _Kp = 0.3;      // 2
+        _Kd = 0.0001;    // 0.2
+        _Ki = 0.00001; 
       }
       else if (ss=="y"){
-        _Kp = 2;      // 2
-        _Kd = 0.2;    // 0.2
-        _Ki = 0; 
+        _Kp = 0.4;      // 2
+        _Kd = 0.0001;    // 0.2
+        _Ki = 0.00001; 
       }
       else if (ss=="z"){
-        _Kp = 2;      // 2
-        _Kd = 0.2;    // 0.2
-        _Ki = 0; 
+        _Kp = 0.3;      // 2
+        _Kd = 0.0001;    // 0.2
+        _Ki = 0.00001; 
       }
       else if (ss=="roll"){       // kp = 1, kd = 0.01, ki = 0 (roll, pitch, yaw)works for pose alignment control in short distance
-        _Kp = 2;      // 2
-        _Kd = 0.2;    // 0.2
-        _Ki = 0;
+        _Kp = 0.4;      // 2
+        _Kd = 0.001;    // 0.2
+        _Ki = 0.0001;
       }
       else if (ss=="pitch"){
-        _Kp = 2;      // 2    // for experiment 2 and 3  use 0.01  (roll, pitch, yaw)
-        _Kd = 0.2;    // 0.2  // for experiment 2 and 3 use 0.01  (roll, pitch, yaw)
-        _Ki = 0;             // for experiment 2 and 3 use 0.000001 (roll, pitch, yaw)
+        _Kp = 0.3;      // 2    // for experiment 2 and 3  use 0.01  (roll, pitch, yaw)
+        _Kd = 0.001;    // 0.2  // for experiment 2 and 3 use 0.01  (roll, pitch, yaw)
+        _Ki = 0.0001;             // for experiment 2 and 3 use 0.000001 (roll, pitch, yaw)
       }
       else if (ss=="yaw"){
-        _Kp = 2;      // 2
-        _Kd = 0.2;    // 0.2
-        _Ki = 0;
+        _Kp = 0.3;      // 2
+        _Kd = 0.001;    // 0.2
+        _Ki = 0.0001;
       }
 
 
@@ -848,12 +853,13 @@ class SurpriseTask
 
     void wire_terminal_pre_insertion_ready_with_position_control_pid()
     {
+      sleep(2);
       updateControlInput();
       // updateControlInput_world();
       getEulerYPR_ee();
       // getXYZ_world();
 
-      while (abs(delta_roll) > 0.05 || abs(delta_pitch) > 0.05 || abs(delta_yaw) > 0.05 || abs(delta_x) > 0.02 || abs(delta_y) > 0.02 || abs(delta_z) > 0.02)
+      while (abs(delta_roll) > 0.05 || abs(delta_pitch) > 0.05 || abs(delta_yaw) > 0.05 || abs(delta_x) > 0.03 || abs(delta_y) > 0.03 || abs(delta_z) > 0.03)
       {
         
         // GET THE ANGULAR VELOCITY
@@ -881,16 +887,16 @@ class SurpriseTask
 
 
         // jaco
-        float jaco_roll = -av_pitch;
-        float jaco_pitch = av_roll;
-        float jaco_yaw  = av_yaw;
+        float jaco_roll = -av_roll;
+        float jaco_pitch = -av_pitch;
+        float jaco_yaw  = -av_yaw;
 
-        float control_step_x = (float) pid_calculation(0, (float)delta_y,"x");
-        float control_step_y = (float) pid_calculation(0, (float)delta_x,"y");
-        float control_step_z = (float) pid_calculation(0, (float)delta_z,"z");
-        float control_step_roll = (float) pid_calculation(0, jaco_roll,"roll");
-        float control_step_pitch = (float) pid_calculation(0, jaco_pitch,"pitch");
-        float control_step_yaw = (float) pid_calculation(0, jaco_yaw,"yaw");
+        float control_step_x = (float) pid_calculation(0, (float)(delta_x),"x");
+        float control_step_y = (float) pid_calculation(0, (float)(-delta_z),"y");
+        float control_step_z = (float) pid_calculation(0, (float)(delta_y),"z");
+        float control_step_roll = (float) pid_calculation(0, -roll_ee,"roll");
+        float control_step_pitch = (float) pid_calculation(0, -pitch_ee,"pitch");
+        float control_step_yaw = (float) pid_calculation(0, -yaw_ee,"yaw");
 
         // // add speed limitation *************************
         // std::cout << "control speed limitations (linear: 1.5m/s, angular: 0.5rad/s)" << std::endl;
@@ -1019,7 +1025,7 @@ class SurpriseTask
       listener_.lookupTransform("/root", "j2n6s300_end_effector",ros::Time(0), transform_ee);
 
       pose_new.position.x = transform_ee.getOrigin().x();
-      pose_new.position.y = transform_ee.getOrigin().y() - 0.05;
+      pose_new.position.y = transform_ee.getOrigin().y() - 0.13;
       pose_new.position.z = transform_ee.getOrigin().z();
       pose_new.orientation.x = transform_ee.getRotation().x();
       pose_new.orientation.y = transform_ee.getRotation().y();
@@ -1027,12 +1033,17 @@ class SurpriseTask
       pose_new.orientation.w = transform_ee.getRotation().w();
 
       Move_robot_once(pose_new);
-      pose_new.position.y = pose_new.position.y - 0.11;
-      Move_robot_once(pose_new);
-      // gripper_action(0.0); // open the gripper
-      // pose_new.position.y = pose_new.position.y + 0.09;
+      // pose_new.position.y = pose_new.position.y - 0.11;
       // Move_robot_once(pose_new);
-
+      // gripper_action(0.0); // open the gripper
+      
+      sleep(1);
+      attach("wall", "wall", "cable", "plug");
+      sleep(1);
+      detach("j2n6s300", "j2n6s300_link_6", "cable", "link_04");
+      sleep(1);
+      pose_new.position.y = pose_new.position.y + 0.14;
+      Move_robot_once(pose_new);
     }
 
     void wire_terminal_insertion_new()
@@ -1155,7 +1166,7 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "Surprise_Task");
     ros::AsyncSpinner spinner(4);  // important
-    ros::Rate r(10);
+    ros::Rate r(60);
     spinner.start();
 
 
@@ -1167,8 +1178,8 @@ int main(int argc, char **argv)
 
     ST.getTargetPose();                      // in use
     ST.Grasp_and_Pullout();                  // in use
-    // ST.wire_terminal_pre_insertion_ready_with_position_control_pid();         // in use
-    // ST.wire_terminal_insertion();                                         // in use
+    ST.wire_terminal_pre_insertion_ready_with_position_control_pid();         // in use
+    ST.wire_terminal_insertion();                                         // in use
 
     auto end = std::chrono::system_clock::now();     // time
 
