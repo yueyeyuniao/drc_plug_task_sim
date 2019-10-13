@@ -60,32 +60,17 @@
 	<!-- use reference frame to match with the real world robot -->
 	<node pkg="tf" type="static_transform_publisher" 
         	name="map_link_to_camera" 
-        	args="1.0 -0.5 0.486 1.57 0 -1.57 /root /camera_link 1" />
+        	args="1.2 -0.6 0.486 1.57 0 -1.57 /root /camera_link 100" />
 
 	<!-- tf publisher for the task-->
  	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_endeffector_default" 
-        	args="0.0 0.0 0.0 0.0 0.0 1.57 /root /endeffector_default 100" />
-
-	<node pkg="tf" type="static_transform_publisher" 
-        	name="base_link_to_socket1" 
-        	args="0.3 -0.7 0.6 0.0 0.0 3.14 /root /socket1 1" />
-
-	<node pkg="tf" type="static_transform_publisher" 
-        	name="base_link_to_socket2" 
-        	args="0.0 -0.7 0.6 0.0 0.0 3.14 /root /socket2 1" />
-
-	<node pkg="tf" type="static_transform_publisher" 
-        	name="base_link_to_target" 
-        	args="0.0 -0.7 0.6 0.0 0.0 3.14 /root /Target_Socket 1" />
+        	args="0.0 0.0 0.0 0.0 0.0 3.14 /root /endeffector_default 100" />
 	
 	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_preinsert" 
-        	args="0.0 -0.6 0.6 0.0 0.0 3.14 /root /preinsert 100" />	
+        	args="0.15 -0.55 0.6 0.0 0.0 3.14 /root /preinsert 100" />	
 
-	<node pkg="tf" type="static_transform_publisher" 
-        	name="eedefault_link_to_ee" 
-        	args="0.0 0.0 0.0 -1.57 0.0 0.0 /j2n6s300_end_effector /end_effector 10" />
 
 </launch>
 
