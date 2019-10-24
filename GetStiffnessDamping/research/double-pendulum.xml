@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Robot name="Pendulum">
+    <RotationAxis>0 1 0 90</RotationAxis> <!-- makes the pendulum vertical -->
+    <KinBody>
+        <Mass type="mimicgeom"><density>100000</density></Mass>
+        <Body name="Base" type="dynamic">
+            <Translation>0.0  0.0  0.0</Translation>
+            <Geom type="cylinder">
+                <rotationaxis>1 0 0 90</rotationaxis>
+                <radius>0.03</radius>
+                <height>0.02</height>
+                <ambientColor>1. 0. 0.</ambientColor>
+                <diffuseColor>1. 0. 0.</diffuseColor>
+            </Geom>
+        </Body>
+        <Body name="Arm0" type="dynamic">
+            <offsetfrom>Base</offsetfrom>
+            <!-- translation and rotation  will be relative to Base -->
+            <Translation>0 0 0</Translation>
+            <Geom type="box">
+                <Translation>0.1 0 0</Translation>
+                <Extents>0.1 0.01 0.01</Extents>
+                <ambientColor>1. 0. 0.</ambientColor>
+                <diffuseColor>1. 0. 0.</diffuseColor>
+            </Geom>
+        </Body>
+        <Joint circular="true" name="Joint0" type="hinge">
+            <Body>Base</Body>
+            <Body>Arm0</Body>
+            <offsetfrom>Arm0</offsetfrom>
+            <weight>4</weight>
+            <axis>0 0 1</axis>
+            <maxvel>3.42</maxvel>
+            <resolution>1</resolution>
+        </Joint>
+        <Body name="Arm1" type="dynamic">
+            <offsetfrom>Arm0</offsetfrom>
+            <Translation>0.2 0 0</Translation>
+            <Geom type="box">
+                <Translation>0.1 0 0</Translation>
+                <Extents>0.1 0.01 0.01</Extents>
+                <ambientColor>0. 0. 1.</ambientColor>
+                <diffuseColor>0. 0. 1.</diffuseColor>
+            </Geom>
+        </Body>
+        <Joint circular="true" name="Joint1" type="hinge">
+            <Body>Arm0</Body>
+            <Body>Arm1</Body>
+            <offsetfrom>Arm1</offsetfrom>
+            <weight>3</weight>
+            <axis>0 0 1</axis>
+            <maxvel>5.42</maxvel>
+            <resolution>1</resolution>
+        </Joint>
+    </KinBody>
+</Robot>
