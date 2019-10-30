@@ -69,7 +69,7 @@
 	
 	<node pkg="tf" type="static_transform_publisher" 
         	name="base_link_to_preinsert" 
-        	args="0.15 -0.55 0.6 0.0 0.0 3.14 /root /preinsert 100" />	
+        	args="0.17 -0.56 0.6 0.0 0.0 3.14 /root /preinsert 100" />	
 
 
 </launch>
