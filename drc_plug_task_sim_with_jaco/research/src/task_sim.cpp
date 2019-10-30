@@ -447,7 +447,7 @@ class SurpriseTask
       // detach the cable with the wall
       attach("j2n6s300", "j2n6s300_link_6", "cable", "link_04");
       sleep(1);
-      detach("wall", "wall", "cable", "plug");
+      detach("wall_sockets", "wall", "cable", "plug");
       sleep(1);
   /////////////////////////////////////////////////////////////////////////////////////////
       group.setPoseTarget(target_pose_wire3);
@@ -702,34 +702,34 @@ class SurpriseTask
     float pid_calculation(float setpoint, float pv, std::string ss)
     {
       if (ss == "x"){
-        _Kp = 0.3;      // 2
-        _Kd = 0.0001;    // 0.2
+        _Kp = 0.4;      // 2
+        _Kd = 0.002;    // 0.2
         _Ki = 0.00001; 
       }
       else if (ss=="y"){
         _Kp = 0.4;      // 2
-        _Kd = 0.0001;    // 0.2
+        _Kd = 0.002;    // 0.2
         _Ki = 0.00001; 
       }
       else if (ss=="z"){
-        _Kp = 0.3;      // 2
-        _Kd = 0.0001;    // 0.2
+        _Kp = 0.4;      // 2
+        _Kd = 0.002;    // 0.2
         _Ki = 0.00001; 
       }
       else if (ss=="roll"){       // kp = 1, kd = 0.01, ki = 0 (roll, pitch, yaw)works for pose alignment control in short distance
-        _Kp = 0.4;      // 2
-        _Kd = 0.001;    // 0.2
-        _Ki = 0.0001;
+        _Kp = 0.5;      // 2
+        _Kd = 0.002;    // 0.2
+        _Ki = 0.00002;
       }
       else if (ss=="pitch"){
-        _Kp = 0.3;      // 2    // for experiment 2 and 3  use 0.01  (roll, pitch, yaw)
-        _Kd = 0.001;    // 0.2  // for experiment 2 and 3 use 0.01  (roll, pitch, yaw)
-        _Ki = 0.0001;             // for experiment 2 and 3 use 0.000001 (roll, pitch, yaw)
+        _Kp = 0.5;      // 2    // for experiment 2 and 3  use 0.01  (roll, pitch, yaw)
+        _Kd = 0.002;    // 0.2  // for experiment 2 and 3 use 0.01  (roll, pitch, yaw)
+        _Ki = 0.00002;             // for experiment 2 and 3 use 0.000001 (roll, pitch, yaw)
       }
       else if (ss=="yaw"){
-        _Kp = 0.3;      // 2
-        _Kd = 0.001;    // 0.2
-        _Ki = 0.0001;
+        _Kp = 0.5;      // 2
+        _Kd = 0.002;    // 0.2
+        _Ki = 0.00002;
       }
 
 
@@ -859,7 +859,7 @@ class SurpriseTask
       getEulerYPR_ee();
       // getXYZ_world();
 
-      while (abs(delta_roll) > 0.05 || abs(delta_pitch) > 0.05 || abs(delta_yaw) > 0.05 || abs(delta_x) > 0.03 || abs(delta_y) > 0.03 || abs(delta_z) > 0.03)
+      while (abs(delta_roll) > 0.04 || abs(delta_pitch) > 0.04 || abs(delta_yaw) > 0.04 || abs(delta_x) > 0.03 || abs(delta_y) > 0.03 || abs(delta_z) > 0.03)
       {
         
         // GET THE ANGULAR VELOCITY
@@ -894,9 +894,9 @@ class SurpriseTask
         float control_step_x = (float) pid_calculation(0, (float)(delta_x),"x");
         float control_step_y = (float) pid_calculation(0, (float)(-delta_z),"y");
         float control_step_z = (float) pid_calculation(0, (float)(delta_y),"z");
-        float control_step_roll = (float) pid_calculation(0, -roll_ee,"roll");
-        float control_step_pitch = (float) pid_calculation(0, -pitch_ee,"pitch");
-        float control_step_yaw = (float) pid_calculation(0, -yaw_ee,"yaw");
+        float control_step_roll = (float) pid_calculation(0, -av_roll,"roll"); // -roll_ee
+        float control_step_pitch = (float) pid_calculation(0, -av_pitch,"pitch"); // -pitch_ee
+        float control_step_yaw = (float) pid_calculation(0, -av_yaw,"yaw");  // -yaw_ee
 
         // // add speed limitation *************************
         // std::cout << "control speed limitations (linear: 1.5m/s, angular: 0.5rad/s)" << std::endl;
@@ -1025,7 +1025,7 @@ class SurpriseTask
       listener_.lookupTransform("/root", "j2n6s300_end_effector",ros::Time(0), transform_ee);
 
       pose_new.position.x = transform_ee.getOrigin().x();
-      pose_new.position.y = transform_ee.getOrigin().y() - 0.13;
+      pose_new.position.y = transform_ee.getOrigin().y() - 0.15;
       pose_new.position.z = transform_ee.getOrigin().z();
       pose_new.orientation.x = transform_ee.getRotation().x();
       pose_new.orientation.y = transform_ee.getRotation().y();
@@ -1038,11 +1038,11 @@ class SurpriseTask
       // gripper_action(0.0); // open the gripper
       
       sleep(1);
-      attach("wall", "wall", "cable", "plug");
+      attach("wall_sockets", "wall", "cable", "plug");
       sleep(1);
       detach("j2n6s300", "j2n6s300_link_6", "cable", "link_04");
       sleep(1);
-      pose_new.position.y = pose_new.position.y + 0.14;
+      pose_new.position.y = pose_new.position.y + 0.15;
       Move_robot_once(pose_new);
     }
 

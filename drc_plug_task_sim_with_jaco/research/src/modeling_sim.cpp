@@ -477,8 +477,8 @@ class PointCloudProc
       }
 
 
-      int selected0 = 5;  // selected0 = grasp_point_index_0;
-      int selected1 = 6;  // selected1 = grasp_point_index_1;
+      int selected0 = 4;  // selected0 = grasp_point_index_0;
+      int selected1 = 5;  // selected1 = grasp_point_index_1;
 
       geometry_msgs::PointStamped points_root_w0, points_root_w1, points_ee_w0, points_ee_w1;
       points_root_w0.header.frame_id = points_root_w1.header.frame_id = "/root";
